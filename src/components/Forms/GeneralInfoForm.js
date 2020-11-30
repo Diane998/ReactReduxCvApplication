@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
-
 import InputField from '../Fields/InputField';
-// import { createCvApplication } from '../../actions';
 
 class GeneralInfoForm extends Component {
   renderInput({ input, label, meta }) {
@@ -15,60 +13,65 @@ class GeneralInfoForm extends Component {
 
   render() {
     return (
-      <>
-        <form onSubmit={this.props.handleSubmit} className="ui error form">
-          <button
-            style={{ marginBottom: '20px' }}
-            className="button ui right floated"
-          >
-            Next Page
-          </button>
-          <h1>General Information</h1>
-          <div className="ui clearing divider"></div>
-          <div className="ui segment">
-            <div className="two fields">
-              <Field
-                name="firstName"
-                type="text"
-                label="First Name"
-                normalize={value => this.onChangeCapitalize(value)}
-                component={this.renderInput}
-              />
-              <Field
-                name="lastName"
-                type="text"
-                label="Last Name"
-                normalize={value => this.onChangeCapitalize(value)}
-                component={this.renderInput}
-              />
-            </div>
+      <form onSubmit={this.props.handleSubmit} className="ui error form">
+        <button
+          style={{ marginBottom: '20px' }}
+          className="button ui right floated"
+        >
+          Next Page
+        </button>
+        <h1>General Information</h1>
+        <div className="ui clearing divider"></div>
+        <div className="ui segment">
+          <div className="two fields">
             <Field
-              name="email"
-              type="email"
-              label="Email (Optional)"
+              name="firstName"
+              type="text"
+              label="First Name"
+              normalize={value => this.onChangeCapitalize(value)}
               component={this.renderInput}
             />
             <Field
-              name="phoneNumber"
-              type="number"
-              label="Phone Number (Optional)"
-              component={this.renderInput}
-            />
-            <Field
-              name="linkedin"
-              type="url"
-              label="Linkedin (Optional)"
-              component={this.renderInput}
-            />
-            <Field
-              name="github"
-              type="url"
-              label="GitHub (Optional)"
+              name="lastName"
+              type="text"
+              label="Last Name"
+              normalize={value => this.onChangeCapitalize(value)}
               component={this.renderInput}
             />
           </div>
-        </form>
-      </>
+          <Field
+            name="profession"
+            type="text"
+            label="Profession"
+            normalize={value => this.onChangeCapitalize(value)}
+            component={this.renderInput}
+          />
+          <Field
+            name="email"
+            type="email"
+            label="Email (Optional)"
+            component={this.renderInput}
+          />
+          <Field
+            name="phoneNumber"
+            type="number"
+            label="Phone Number (Optional)"
+            component={this.renderInput}
+          />
+          <Field
+            name="linkedin"
+            type="url"
+            label="Linkedin (Optional)"
+            component={this.renderInput}
+          />
+          <Field
+            name="github"
+            type="url"
+            label="GitHub (Optional)"
+            component={this.renderInput}
+          />
+        </div>
+      </form>
     );
   }
 }
@@ -78,7 +81,13 @@ const validate = formValues => {
 
   if (!formValues.firstName) errors.firstName = 'Enter your first name';
   if (!formValues.lastName) errors.lastName = 'Enter your last name';
-
+  if (!formValues.profession) errors.profession = 'Enter your profession';
+  if (!formValues.email) errors.email = 'Enter your email';
+  if (!formValues.phoneNumber) errors.phoneNumber = 'Enter your phone number';
+  if (!formValues.linkedin)
+    errors.linkedin = 'Enter the URL to your Likedin profile';
+  if (!formValues.github)
+    errors.github = 'Enter the URL to your GitHub profile';
   return errors;
 };
 
@@ -88,12 +97,3 @@ export default reduxForm({
   forceUnregisterOnUnmount: true,
   validate
 })(GeneralInfoForm);
-
-// const formWrapped = reduxForm({
-//   form: 'cv-form',
-//   destroyOnUnmount: false,
-//   forceUnregisterOnUnmount: true,
-//   validate
-// })(GeneralInfoForm);
-
-// export default connect(null, { createCvApplication })(formWrapped);

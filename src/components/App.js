@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Route, Router } from 'react-router-dom';
+import { Route, Router, Switch } from 'react-router-dom';
 import history from '../history';
+
+import { Container } from 'semantic-ui-react';
 import CvApplicationForm from './CvApplicationForm';
 import CvApplication from './CvApplication';
 import Navbar from './Navbar';
@@ -11,10 +13,12 @@ class App extends Component {
       <>
         <Router history={history}>
           <Navbar />
-          <div className="ui container">
-            <Route path="/create" exact component={CvApplicationForm} />
-            <Route path="/view" exact component={CvApplication} />
-          </div>
+          <Container>
+            <Switch>
+              <Route path="/create" exact component={CvApplicationForm} />
+              <Route path="/view/:docId" exact component={CvApplication} />
+            </Switch>
+          </Container>
         </Router>
       </>
     );

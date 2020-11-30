@@ -26,7 +26,6 @@ class CvApplicationForm extends Component {
   }
 
   onSubmit = formValues => {
-    // console.log(this.props);
     this.props.createCvApplication(formValues);
   };
 

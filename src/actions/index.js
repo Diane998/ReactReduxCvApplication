@@ -3,7 +3,7 @@ import history from '../history';
 export const createCvApplication = formValues => async (
   dispatch,
   getState,
-  { getFirebase, getFirestore }
+  { getFirestore }
 ) => {
   const firestore = getFirestore();
   firestore
@@ -11,9 +11,12 @@ export const createCvApplication = formValues => async (
     .add({
       ...formValues
     })
-    .then(() => {
-      dispatch({ type: 'CREATE_CV_APPLICATION', payload: formValues });
-      history.push('/view');
+    .then(docRef => {
+      dispatch({
+        type: 'CREATE_CV_APPLICATION',
+        payload: { ...formValues, docId: docRef.id }
+      });
+      history.push(`/view/${docRef.id}`);
     })
     .catch(err => dispatch({ type: 'CREATE_CV_APPLICATION_ERROR', err }));
 };
