@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { Menu } from 'semantic-ui-react';
 
 class NavBar extends Component {
   render() {
     return (
-      <div className="ui inverted menu">
-        <Link to="/create" className="item">
+      <Menu pointing secondary>
+        <NavLink exact to="/" className="item">
           Create CV Application
-        </Link>
-        <Link to="/view" className="item">
-          View CV Application
-        </Link>
-      </div>
+        </NavLink>
+        <NavLink exact to="/view/XAqHyKKplZU8UtWINinY" className="item">
+          View Default CV Application
+        </NavLink>
+      </Menu>
     );
   }
 }
