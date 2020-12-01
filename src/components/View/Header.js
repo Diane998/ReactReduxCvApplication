@@ -10,7 +10,11 @@ const HeaderView = ({
   github
 }) => {
   return (
-    <Grid.Column className="ui grid" width={16}>
+    <Grid.Column
+      style={{ backgroundColor: '#353b45', color: 'white' }}
+      className="ui grid"
+      width={16}
+    >
       <Grid.Row>
         <Grid.Column width={16}>
           <h1>{name}</h1>
