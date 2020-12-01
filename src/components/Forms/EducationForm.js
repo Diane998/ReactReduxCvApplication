@@ -8,10 +8,7 @@ const textFields = [
   { name: 'course', type: 'text', label: 'Course' }
 ];
 
-const dateFields = [
-  { name: 'eduStartDate', type: 'date', label: 'Start Date' },
-  { name: 'eduEndDate', type: 'date', label: 'End Date' }
-];
+const dateFields = [{ name: 'eduEndDate', type: 'date', label: 'End Date' }];
 
 class EducationForm extends Component {
   render() {

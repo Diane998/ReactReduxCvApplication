@@ -49,25 +49,25 @@ class GeneralInfoForm extends Component {
           <Field
             name="email"
             type="email"
-            label="Email (Optional)"
+            label="Email"
             component={this.renderInput}
           />
           <Field
             name="phoneNumber"
             type="number"
-            label="Phone Number (Optional)"
+            label="Phone Number"
             component={this.renderInput}
           />
           <Field
             name="linkedin"
             type="url"
-            label="Linkedin (Optional)"
+            label="Linkedin"
             component={this.renderInput}
           />
           <Field
             name="github"
             type="url"
-            label="GitHub (Optional)"
+            label="GitHub"
             component={this.renderInput}
           />
         </div>

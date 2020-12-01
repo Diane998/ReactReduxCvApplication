@@ -23,7 +23,6 @@ class FieldArrayForm extends Component {
   }
 
   renderNestedFieldArray = ({ fields }) => {
-    console.log(this.props.nestedFieldArray[0]);
     const { arrayFieldName, addFieldText } = this.props.nestedFieldArray[0];
 
     return (
@@ -105,6 +104,16 @@ class FieldArrayForm extends Component {
               label={label}
               normalize={value => this.onChangeCapitalize(value)}
               component={this.renderInputText}
+            />
+          );
+        } else if (type === 'date') {
+          return (
+            <Field
+              key={`date ${i}`}
+              name={`${field}.${name}`}
+              type={type}
+              label={label}
+              component={this.renderInputDate}
             />
           );
         } else {
