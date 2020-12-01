@@ -1,6 +1,5 @@
 import history from '../history';
-
-export let id;
+import { reset } from 'redux-form';
 
 export const createCvApplication = formValues => async (
   dispatch,
@@ -14,11 +13,10 @@ export const createCvApplication = formValues => async (
       ...formValues
     })
     .then(docRef => {
-      dispatch({
+      dispatch(reset('cv-form'), {
         type: 'CREATE_CV_APPLICATION',
         payload: { ...formValues, docId: docRef.id }
       });
-      id = docRef.id;
       history.push(`/view/${docRef.id}`);
     })
     .catch(err => dispatch({ type: 'CREATE_CV_APPLICATION_ERROR', err }));
