@@ -3,7 +3,6 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
 const RangeSlider = ({ props }) => {
-  console.log(props);
   const { name, value, onChange } = props.input;
   return (
     <div className="field">
