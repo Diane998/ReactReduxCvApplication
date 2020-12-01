@@ -10,17 +10,15 @@ import Navbar from './Navbar';
 class App extends Component {
   render() {
     return (
-      <>
-        <Router history={history}>
-          <Navbar />
-          <Container>
-            <Switch>
-              <Route path="/create" exact component={CvApplicationForm} />
-              <Route path="/view/:docId" exact component={CvApplication} />
-            </Switch>
-          </Container>
-        </Router>
-      </>
+      <Router history={history}>
+        <Navbar />
+        <Container>
+          <Switch>
+            <Route path="/" exact component={CvApplicationForm} />
+            <Route path="/view/:docId" exact component={CvApplication} />
+          </Switch>
+        </Container>
+      </Router>
     );
   }
 }
