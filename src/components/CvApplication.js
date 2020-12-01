@@ -5,7 +5,6 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 import { Grid } from 'semantic-ui-react';
 import Header from './View/Header';
-
 import ContentList from './View/ContentList';
 import Title from './View/Title';
 
@@ -66,19 +65,16 @@ class CvApplication extends Component {
             <Title header="Education" />
             {education ? (
               <>
-                {education.map(
-                  ({ eduStartDate, eduEndDate, college, course }, i) => {
-                    return (
-                      <ContentList
-                        key={i}
-                        startDate={eduStartDate}
-                        endDate={eduEndDate}
-                        bold={college}
-                        paragrapgh={course}
-                      />
-                    );
-                  }
-                )}
+                {education.map(({ eduEndDate, college, course }, i) => {
+                  return (
+                    <ContentList
+                      key={i}
+                      endDate={eduEndDate}
+                      bold={college}
+                      paragrapgh={course}
+                    />
+                  );
+                })}
               </>
             ) : null}
           </Grid.Row>
