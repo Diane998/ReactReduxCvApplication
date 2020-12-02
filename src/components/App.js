@@ -6,6 +6,8 @@ import { Container } from 'semantic-ui-react';
 import CvApplicationForm from './CvApplicationForm';
 import CvApplication from './CvApplication';
 import Navbar from './Navbar';
+import SignIn from './auth/SignIn';
+import SignUp from './auth/SignUp';
 
 class App extends Component {
   render() {
@@ -14,7 +16,9 @@ class App extends Component {
         <Navbar />
         <Container>
           <Switch>
-            <Route path="/" exact component={CvApplicationForm} />
+            <Route path="/" exact component={SignIn} />
+            <Route path="/signup" exact component={SignUp} />
+            <Route path="/create" exact component={CvApplicationForm} />
             <Route path="/view/:docId" exact component={CvApplication} />
           </Switch>
         </Container>
