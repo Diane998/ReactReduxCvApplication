@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import { createCvApplication } from '../actions';
 import { connect } from 'react-redux';
 
@@ -34,7 +35,7 @@ class CvApplicationForm extends Component {
     const { auth } = this.props;
 
     if (!auth.uid) {
-      return <div className="ui segment">sign in</div>;
+      return <Redirect to="/signin" />;
     } else {
       return (
         <>
