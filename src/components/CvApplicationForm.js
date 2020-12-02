@@ -31,28 +31,42 @@ class CvApplicationForm extends Component {
 
   render() {
     const { page } = this.state;
+    const { auth } = this.props;
 
-    return (
-      <>
-        {page === 1 && <GeneralInfoForm onSubmit={this.nextPage} />}
-        {page === 2 && (
-          <EducationForm
-            previousPage={this.previousPage}
-            onSubmit={this.nextPage}
-          />
-        )}
-        {page === 3 && (
-          <WorkForm previousPage={this.previousPage} onSubmit={this.nextPage} />
-        )}
-        {page === 4 && (
-          <LanguagesForm
-            previousPage={this.previousPage}
-            onSubmit={this.onSubmit}
-          />
-        )}
-      </>
-    );
+    if (!auth.uid) {
+      return <div className="ui segment">sign in</div>;
+    } else {
+      return (
+        <>
+          {page === 1 && <GeneralInfoForm onSubmit={this.nextPage} />}
+          {page === 2 && (
+            <EducationForm
+              previousPage={this.previousPage}
+              onSubmit={this.nextPage}
+            />
+          )}
+          {page === 3 && (
+            <WorkForm
+              previousPage={this.previousPage}
+              onSubmit={this.nextPage}
+            />
+          )}
+          {page === 4 && (
+            <LanguagesForm
+              previousPage={this.previousPage}
+              onSubmit={this.onSubmit}
+            />
+          )}
+        </>
+      );
+    }
   }
 }
 
-export default connect(null, { createCvApplication })(CvApplicationForm);
+const mapStateToProps = state => {
+  return { auth: state.firebase.auth };
+};
+
+export default connect(mapStateToProps, { createCvApplication })(
+  CvApplicationForm
+);
