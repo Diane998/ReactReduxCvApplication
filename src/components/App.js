@@ -18,6 +18,7 @@ class App extends Component {
           <Switch>
             <Route path="/" exact component={SignIn} />
             <Route path="/signup" exact component={SignUp} />
+            <Route path="/signin" exact component={SignIn} />
             <Route path="/create" exact component={CvApplicationForm} />
             <Route path="/view/:docId" exact component={CvApplication} />
           </Switch>
