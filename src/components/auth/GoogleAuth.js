@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { signIn, signOut } from '../../actions';
 import { signInWithGoogle, signOutWithGoogle } from '../../actions';
-// import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 class GoogleAuth extends Component {
   renderAuthButton() {

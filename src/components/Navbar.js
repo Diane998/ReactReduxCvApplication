@@ -30,6 +30,9 @@ class NavBar extends Component {
   render() {
     return (
       <Menu>
+        <div className="item">
+          <h3>CV Creator</h3>
+        </div>
         <NavLink exact to="/create" className="item">
           Create CV Application
         </NavLink>
@@ -45,13 +48,14 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = state => {
-  if (state) {
+  if (state.firebase.auth.isEmpty) {
+    return {};
+  } else {
     const {
       firebase: { auth }
     } = state;
     return { auth: auth, signInMethod: auth.providerData[0].providerId };
   }
-  return null;
 };
 
 export default connect(mapStateToProps)(NavBar);
