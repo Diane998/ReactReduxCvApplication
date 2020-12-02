@@ -1,10 +1,14 @@
 import { combineReducers } from 'redux';
-import { reducer } from 'redux-form';
+import { reducer as formReducer } from 'redux-form';
 import { firestoreReducer } from 'redux-firestore';
+import { firebaseReducer } from 'react-redux-firebase';
+import authReducer from './authReducer';
 import cvApplicationReducer from './cvApplicationReducer';
 
 export default combineReducers({
-  form: reducer,
+  auth: authReducer,
+  form: formReducer,
   firestore: firestoreReducer,
-  cvApplication: cvApplicationReducer
+  cvApplication: cvApplicationReducer,
+  firebase: firebaseReducer
 });
