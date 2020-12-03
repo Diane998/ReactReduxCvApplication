@@ -1,46 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
+import InputField from '../Fields/InputField';
 import { signIn } from '../../actions';
 
 import GoogleAuth from './GoogleAuth';
-import { Segment, Button, Form } from 'semantic-ui-react';
+import { Segment, Button, Form, Message } from 'semantic-ui-react';
 
 class SignIn extends Component {
-  state = { email: '', password: '' };
-
-  handleSubmit = e => {
-    e.preventDefault();
-    this.props.signIn(this.state);
+  onSubmit = formValues => {
+    this.props.signIn(formValues);
   };
 
   render() {
     if (!this.props.auth) {
+      const { authError } = this.props;
       return (
         <Segment>
           <h3>Sign in</h3>
+          <p>To create your CV application</p>
           <div className="ui divider"></div>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Field>
-              <label>Email</label>
-              <input
-                autoComplete="off"
-                type="email"
-                id="email"
-                onChange={e => this.setState({ [e.target.id]: e.target.value })}
-                placeholder="Email"
+          <Form error onSubmit={this.props.handleSubmit(this.onSubmit)}>
+            <Field
+              name="email"
+              type="email"
+              label="Email"
+              component={InputField}
+            />
+            <Field
+              name="password"
+              type="password"
+              label="Password"
+              component={InputField}
+            />
+            {authError ? (
+              <Message
+                error
+                header={authError.code}
+                content={authError.message}
               />
-            </Form.Field>
-            <Form.Field>
-              <label>Password</label>
-              <input
-                autoComplete="off"
-                type="password"
-                id="password"
-                onChange={e => this.setState({ [e.target.id]: e.target.value })}
-                placeholder="Email"
-              />
-            </Form.Field>
-            <Button>Sign in</Button>
+            ) : null}
+            <Button type="submit">Sign in</Button>
           </Form>
           <br />
           <GoogleAuth />
@@ -52,9 +52,18 @@ class SignIn extends Component {
   }
 }
 
+const validate = formValues => {
+  const errors = {};
+
+  if (!formValues.email) errors.email = 'Enter your email';
+  if (!formValues.password) errors.password = 'Enter your password';
+
+  return errors;
+};
+
 const mapStateToProps = state => {
   if (state.firebase.auth.isEmpty) {
-    return {};
+    return { authError: state.auth.authError };
   } else {
     const {
       firebase: { auth }
@@ -63,4 +72,11 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps, { signIn })(SignIn);
+const formWrapped = reduxForm({
+  form: 'signIn',
+  destroyOnUnmount: false,
+  forceUnregisterOnUnmount: true,
+  validate
+})(SignIn);
+
+export default connect(mapStateToProps, { signIn })(formWrapped);
