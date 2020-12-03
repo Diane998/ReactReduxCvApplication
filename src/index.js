@@ -10,11 +10,19 @@ import {
   getFirestore
 } from 'redux-firestore';
 import { getFirebase, ReactReduxFirebaseProvider } from 'react-redux-firebase';
-import firebaseConfig from './config/firebaseConfig';
+import { firebaseConfig } from './config/firebaseConfig';
 import firebase from 'firebase/app';
 
 import App from './components/App';
 import rootReducer from './reducers';
+
+const rrfConfig = {
+  userProfile: 'users',
+  useFirestoreForProfile: true
+};
+
+firebase.initializeApp(firebaseConfig);
+firebase.firestore();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -26,11 +34,6 @@ const store = createStore(
     reduxFirestore(firebase, firebaseConfig)
   )
 );
-
-const rrfConfig = {
-  userProfiles: 'users',
-  useFirestoreForProfile: true
-};
 
 const rrfProps = {
   firebase,
