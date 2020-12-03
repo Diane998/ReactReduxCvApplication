@@ -10,14 +10,6 @@ class FieldArrayForm extends Component {
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
-  renderInputText({ input, label, meta }) {
-    return <InputField input={input} label={label} meta={meta} />;
-  }
-
-  renderInputDate({ input, label, meta }) {
-    return <DateField input={input} label={label} meta={meta} />;
-  }
-
   renderSlider(props) {
     return <RangeSlider props={props} />;
   }
@@ -45,7 +37,7 @@ class FieldArrayForm extends Component {
                   name={`${field}.${arrayFieldName}`}
                   type="text"
                   label={`Task #${i + 1}`}
-                  component={this.renderInputText}
+                  component={InputField}
                 />
                 <button
                   className="ui right floated red button"
@@ -71,22 +63,22 @@ class FieldArrayForm extends Component {
             if (type === 'text') {
               return (
                 <Field
-                  key={`text ${i}`}
+                  key={`${type} ${i}`}
                   name={`${field}.${name}`}
-                  type={type}
                   label={label}
+                  type={type}
                   normalize={value => this.onChangeCapitalize(value)}
-                  component={this.renderInputText}
+                  component={InputField}
                 />
               );
             } else {
               return (
                 <Field
-                  key={`date ${i}`}
+                  key={`${type} ${i}`}
                   name={`${field}.${name}`}
-                  type={type}
+                  type="date"
                   label={label}
-                  component={this.renderInputDate}
+                  component={DateField}
                 />
               );
             }
@@ -100,10 +92,10 @@ class FieldArrayForm extends Component {
             <Field
               key={`text ${i}`}
               name={`${field}.${name}`}
-              type={type}
+              type="text"
               label={label}
               normalize={value => this.onChangeCapitalize(value)}
-              component={this.renderInputText}
+              component={InputField}
             />
           );
         } else if (type === 'date') {
@@ -111,9 +103,9 @@ class FieldArrayForm extends Component {
             <Field
               key={`date ${i}`}
               name={`${field}.${name}`}
-              type={type}
+              type="date"
               label={label}
-              component={this.renderInputDate}
+              component={DateField}
             />
           );
         } else {
@@ -141,16 +133,6 @@ class FieldArrayForm extends Component {
 
     return (
       <div className="ui list">
-        <div className="item">
-          <button
-            type="button"
-            onClick={() => fields.push({})}
-            className="ui right floated green button"
-          >
-            {addFieldText}
-          </button>
-        </div>
-
         {fields.map((field, i) => (
           <div key={i} className="item">
             <div style={{ paddingBottom: '50px' }} className="ui segment">
@@ -184,6 +166,15 @@ class FieldArrayForm extends Component {
             </div>
           </div>
         ))}
+        <div className="item">
+          <button
+            type="button"
+            onClick={() => fields.push({})}
+            className="ui right floated green button"
+          >
+            {addFieldText}
+          </button>
+        </div>
       </div>
     );
   };
@@ -192,6 +183,9 @@ class FieldArrayForm extends Component {
     const { header, onSubmit, name, prevPage, submitBtnText } = this.props;
     return (
       <form onSubmit={onSubmit} className="ui error form">
+        <h1>{header}</h1>
+        <div className="ui clearing divider"></div>
+        <FieldArray name={name} component={this.renderFieldArray} />
         <button
           type="submit"
           style={{ marginBottom: '20px' }}
@@ -207,9 +201,6 @@ class FieldArrayForm extends Component {
         >
           Previous
         </button>
-        <h1>{header}</h1>
-        <div className="ui clearing divider"></div>
-        <FieldArray name={name} component={this.renderFieldArray} />
       </form>
     );
   }
