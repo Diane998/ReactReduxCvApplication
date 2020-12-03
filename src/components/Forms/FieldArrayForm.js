@@ -19,16 +19,6 @@ class FieldArrayForm extends Component {
 
     return (
       <div className="ui list">
-        <div className="item">
-          <button
-            type="button"
-            onClick={() => fields.push({})}
-            className="ui right floated green button"
-          >
-            {addFieldText}
-          </button>
-        </div>
-
         {fields.map((field, i) => (
           <div key={`task ${i}`} className="item">
             <div className="ui list">
@@ -51,6 +41,15 @@ class FieldArrayForm extends Component {
             </div>
           </div>
         ))}
+        <div className="item">
+          <button
+            type="button"
+            onClick={() => fields.push({})}
+            className="ui right floated green button"
+          >
+            {addFieldText}
+          </button>
+        </div>
       </div>
     );
   };
@@ -161,7 +160,7 @@ class FieldArrayForm extends Component {
                 title="Remove Field"
                 onClick={() => fields.remove(i)}
               >
-                Remove
+                Remove Field
               </button>
             </div>
           </div>
