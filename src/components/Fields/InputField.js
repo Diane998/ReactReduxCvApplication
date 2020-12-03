@@ -10,13 +10,13 @@ const renderError = ({ error, touched }) => {
   }
 };
 
-const InputField = ({ input, label, meta }) => {
+const InputField = ({ input, label, meta, type }) => {
   const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
 
   return (
     <div className={className}>
       <label>{label}</label>
-      <input {...input} autoComplete="off" />
+      <input {...input} type={type} autoComplete="off" />
       {meta ? renderError(meta) : null}
     </div>
   );

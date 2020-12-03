@@ -7,7 +7,11 @@ class SignOut extends Component {
     const { auth } = this.props;
     return auth.uid ? (
       <div
-        style={{ border: '1px solid rgba(34,36,38,.1)', cursor: 'pointer' }}
+        style={{
+          height: '100%',
+          border: '1px solid rgba(34,36,38,.1)',
+          cursor: 'pointer'
+        }}
         onClick={this.props.signOut}
         className="item"
       >

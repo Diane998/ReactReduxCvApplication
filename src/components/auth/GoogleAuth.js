@@ -7,6 +7,7 @@ class GoogleAuth extends Component {
     const { auth } = this.props;
     return auth.uid ? (
       <button
+        style={{ marginTop: '5px' }}
         onClick={this.props.signOutWithGoogle}
         className="ui red google button"
       >
