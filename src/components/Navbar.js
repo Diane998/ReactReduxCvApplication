@@ -39,6 +39,11 @@ class NavBar extends Component {
         <NavLink exact to="/view/XAqHyKKplZU8UtWINinY" className="item">
           View Default CV Application
         </NavLink>
+        {this.props.auth ? (
+          <NavLink exact to={`/view/${this.props.auth.uid}`} className="item">
+            View CV Application
+          </NavLink>
+        ) : null}
         <div style={{ marginRight: '15px' }} className="right menu">
           {this.renderAuthentication()}
         </div>
