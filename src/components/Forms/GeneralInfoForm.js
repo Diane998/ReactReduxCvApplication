@@ -3,10 +3,6 @@ import { Field, reduxForm } from 'redux-form';
 import InputField from '../Fields/InputField';
 
 class GeneralInfoForm extends Component {
-  renderInput({ input, label, meta }) {
-    return <InputField input={input} label={label} meta={meta} />;
-  }
-
   onChangeCapitalize(value) {
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
@@ -14,12 +10,6 @@ class GeneralInfoForm extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit} className="ui error form">
-        <button
-          style={{ marginBottom: '20px' }}
-          className="button ui right floated"
-        >
-          Next Page
-        </button>
         <h1>General Information</h1>
         <div className="ui clearing divider"></div>
         <div className="ui segment">
@@ -29,14 +19,14 @@ class GeneralInfoForm extends Component {
               type="text"
               label="First Name"
               normalize={value => this.onChangeCapitalize(value)}
-              component={this.renderInput}
+              component={InputField}
             />
             <Field
               name="lastName"
               type="text"
               label="Last Name"
               normalize={value => this.onChangeCapitalize(value)}
-              component={this.renderInput}
+              component={InputField}
             />
           </div>
           <Field
@@ -44,33 +34,40 @@ class GeneralInfoForm extends Component {
             type="text"
             label="Profession"
             normalize={value => this.onChangeCapitalize(value)}
-            component={this.renderInput}
+            component={InputField}
           />
+          <br />
           <Field
             name="email"
             type="email"
             label="Email"
-            component={this.renderInput}
+            component={InputField}
           />
           <Field
             name="phoneNumber"
-            type="number"
+            type="text"
             label="Phone Number"
-            component={this.renderInput}
+            component={InputField}
           />
           <Field
             name="linkedin"
-            type="url"
+            type="text"
             label="Linkedin"
-            component={this.renderInput}
+            component={InputField}
           />
           <Field
             name="github"
-            type="url"
+            type="text"
             label="GitHub"
-            component={this.renderInput}
+            component={InputField}
           />
         </div>
+        <button
+          style={{ marginBottom: '20px' }}
+          className="button ui right floated"
+        >
+          Next Page
+        </button>
       </form>
     );
   }

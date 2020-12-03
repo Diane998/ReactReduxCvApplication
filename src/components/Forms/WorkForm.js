@@ -14,7 +14,12 @@ const dateFields = [
 ];
 
 const nestedFieldArray = [
-  { name: 'tasks', arrayFieldName: 'work', addFieldText: 'Add Task' }
+  {
+    name: 'tasks',
+    type: 'text',
+    arrayFieldName: 'work',
+    addFieldText: 'Add Task'
+  }
 ];
 
 class WorkForm extends Component {
