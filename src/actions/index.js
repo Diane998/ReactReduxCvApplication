@@ -2,101 +2,87 @@ import history from '../history';
 import { reset } from 'redux-form';
 import { getFirestore } from 'redux-firestore';
 
-export const signInWithGoogle = credentials => async (
+export const signInWithGoogle = () => async (
   dispatch,
   getState,
   { getFirebase }
 ) => {
   const firebase = getFirebase();
 
-  firebase
-    .login({
+  try {
+    await firebase.login({
       provider: 'google',
       type: 'popup'
-    })
-    .then(({ credential: { signInMethod }, profile: { uid } }) => {
-      dispatch({
-        type: 'SIGN_IN_WITH_GOOGLE',
-        payload: { signInMethod, uid }
-      });
     });
+    dispatch({ type: 'SIGN_IN_WITH_GOOGLE' });
+    history.push('/create');
+  } catch (err) {
+    dispatch({ type: 'SIGN_IN_WITH_GOOGLE_ERROR', payload: err });
+  }
 };
 
-export const signOutWithGoogle = credentials => async (
+export const signOutWithGoogle = () => async (
   dispatch,
   getState,
   { getFirebase }
 ) => {
   const firebase = getFirebase();
 
-  firebase.logout().then(() => {
-    dispatch({ type: 'SIGN_OUT_WITH_GOOGLE' });
-  });
+  await firebase.logout();
+  dispatch({ type: 'SIGN_OUT_WITH_GOOGLE' });
+  history.push('/create');
 };
 
-export const signIn = credentials => async (
+export const signIn = ({ email, password }) => async (
   dispatch,
   getState,
   { getFirebase }
 ) => {
   const firebase = getFirebase();
 
-  credentials
-    ? firebase
-        .login({
-          email: credentials.email,
-          password: credentials.password
-        })
-        .then(() => {
-          dispatch({ type: 'SIGN_IN' });
-        })
-    : firebase
-        .login({
-          provider: 'google',
-          type: 'popup'
-        })
-        .then(() => {
-          dispatch({ type: 'SIGN_IN' });
-        });
-
-  // firebase
-  //   .login({
-  //     provider: 'google',
-  //     type: 'popup'
-  //   })
-  //   .then(() => {
-  //     dispatch({ type: 'SIGN_IN' });
-  //   });
+  try {
+    await firebase.login({
+      email,
+      password
+    });
+    dispatch(reset('signIn'), { type: 'SIGN_IN' });
+    history.push('/create');
+  } catch (err) {
+    dispatch({ type: 'SIGN_IN_ERROR', payload: err });
+  }
 };
 
-export const signOut = () => (dispatch, getState, { getFirebase }) => {
+export const signOut = () => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
 
-  firebase.logout().then(() => {
-    dispatch({ type: 'SIGN_OUT' });
-  });
+  await firebase.auth().signOut();
+  dispatch({ type: 'SIGN_OUT' });
+  history.push('/create');
 };
 
-export const signUp = user => (dispatch, getState, { getFirebase }) => {
+export const signUp = ({ email, password, username }) => async (
+  dispatch,
+  getState,
+  { getFirebase }
+) => {
   const firebase = getFirebase();
   const firestore = getFirestore();
 
-  firebase
-    .createUser({
-      email: user.email,
-      password: user.password,
-      username: user.username
-    })
-    .then(res => {
-      firestore
-        .collection('users')
-        .doc(res.user.uid)
-        .set({ email: user.email });
-    })
-    .then(() => {
-      dispatch({ type: 'SIGN_UP' });
-      history.push('/create');
-    });
+  try {
+    const createUser = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password);
+
+    await firestore
+      .collection('users')
+      .doc(createUser.user.uid)
+      .set({ email, username });
+
+    dispatch(reset('signUp'), { type: 'SIGN_UP' });
+    history.push('/create');
+  } catch (err) {
+    dispatch({ type: 'SIGN_UP_ERROR', payload: err });
+  }
 };
 
 export const createCvApplication = formValues => async (
@@ -105,17 +91,21 @@ export const createCvApplication = formValues => async (
   { getFirestore }
 ) => {
   const firestore = getFirestore();
-  firestore
-    .collection('cvApplications')
-    .add({
-      ...formValues
-    })
-    .then(docRef => {
-      dispatch(reset('cv-form'), {
-        type: 'CREATE_CV_APPLICATION',
-        payload: { ...formValues, docId: docRef.id }
+  const uid = getState().firebase.auth.uid;
+
+  try {
+    await firestore
+      .collection('cvApplications')
+      .doc(uid)
+      .set({
+        ...formValues
       });
-      history.push(`/view/${docRef.id}`);
-    })
-    .catch(err => dispatch({ type: 'CREATE_CV_APPLICATION_ERROR', err }));
+
+    await dispatch(reset('cv-form'), {
+      type: 'CREATE_CV_APPLICATION'
+    });
+    history.push(`/view/${uid}`);
+  } catch (err) {
+    dispatch({ type: 'CREATE_CV_APPLICATION_ERROR', payload: err });
+  }
 };
