@@ -29,10 +29,10 @@ class NavBar extends Component {
 
   render() {
     return (
-      <Menu>
-        <div className="item">
+      <Menu stackable>
+        <Menu.Item>
           <h3>CV Creator</h3>
-        </div>
+        </Menu.Item>
         <NavLink exact to="/create" className="item">
           Create CV Application
         </NavLink>
@@ -44,9 +44,7 @@ class NavBar extends Component {
             View CV Application
           </NavLink>
         ) : null}
-        <div style={{ marginRight: '15px' }} className="right menu">
-          {this.renderAuthentication()}
-        </div>
+        <div className="right menu">{this.renderAuthentication()}</div>
       </Menu>
     );
   }

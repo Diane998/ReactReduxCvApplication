@@ -19,7 +19,7 @@ const CvView = ({
   }
 }) => {
   return (
-    <Grid style={{ margin: '50px 0' }}>
+    <Grid centered style={{ margin: '50px 0' }}>
       <Grid.Row>
         <Header
           name={`${firstName} ${lastName}`}
