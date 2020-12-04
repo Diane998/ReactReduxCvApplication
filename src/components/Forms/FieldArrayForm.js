@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Field, FieldArray } from 'redux-form';
 
+import { List, Button, Form, Segment, Divider } from 'semantic-ui-react';
 import DateField from '../Fields/DateField';
 import InputField from '../Fields/InputField';
 import RangeSlider from '../Fields/RangeSlider';
@@ -18,46 +19,48 @@ class FieldArrayForm extends Component {
     const { arrayFieldName, addFieldText } = this.props.nestedFieldArray[0];
 
     return (
-      <div className="ui list">
+      <List>
         {fields.map((field, i) => (
-          <div key={`task ${i}`} className="item">
-            <div className="ui list">
-              <div className="item">
+          <List.Item key={`task ${i}`}>
+            <List>
+              <List.Item>
                 <Field
                   name={`${field}.${arrayFieldName}`}
                   type="text"
                   label={`Task #${i + 1}`}
                   component={InputField}
                 />
-                <button
-                  className="ui right floated red button"
+                <Button
+                  floated="right"
+                  color="red"
                   type="button"
-                  title="Remove Member"
+                  title="Remove Task"
                   onClick={() => fields.remove(i)}
                 >
                   Remove Task
-                </button>
-              </div>
-            </div>
-          </div>
+                </Button>
+              </List.Item>
+            </List>
+          </List.Item>
         ))}
-        <div className="item">
-          <button
+        <List.Item>
+          <Button
             type="button"
             onClick={() => fields.push({})}
-            className="ui right floated green button"
+            floated="right"
+            color="green"
           >
             {addFieldText}
-          </button>
-        </div>
-      </div>
+          </Button>
+        </List.Item>
+      </List>
     );
   };
 
   renderField = (fieldArr, field) => {
     if (fieldArr.length === 2) {
       return (
-        <div className="two fields">
+        <Form.Group widths="equal">
           {fieldArr.map(({ name, type, label }, i) => {
             if (type === 'text') {
               return (
@@ -82,7 +85,7 @@ class FieldArrayForm extends Component {
               );
             }
           })}
-        </div>
+        </Form.Group>
       );
     } else {
       return fieldArr.map(({ name, type, label }, i) => {
@@ -131,10 +134,10 @@ class FieldArrayForm extends Component {
     } = this.props;
 
     return (
-      <div className="ui list">
+      <List>
         {fields.map((field, i) => (
-          <div key={i} className="item">
-            <div style={{ paddingBottom: '50px' }} className="ui segment">
+          <List.Item key={i}>
+            <Segment style={{ paddingBottom: '50px' }}>
               {textFields && dateFields ? (
                 <>
                   {this.renderField(textFields, field)}
@@ -154,53 +157,51 @@ class FieldArrayForm extends Component {
                   component={this.renderNestedFieldArray}
                 />
               ) : null}
-              <button
-                className="ui right floated red button"
+              <Button
+                floated="right"
+                color="red"
                 type="button"
                 title="Remove Field"
                 onClick={() => fields.remove(i)}
               >
                 Remove Field
-              </button>
-            </div>
-          </div>
+              </Button>
+            </Segment>
+          </List.Item>
         ))}
-        <div className="item">
-          <button
+        <List.Item>
+          <Button
             type="button"
             onClick={() => fields.push({})}
-            className="ui right floated green button"
+            floated="right"
+            color="green"
           >
             {addFieldText}
-          </button>
-        </div>
-      </div>
+          </Button>
+        </List.Item>
+      </List>
     );
   };
 
   render() {
     const { header, onSubmit, name, prevPage, submitBtnText } = this.props;
     return (
-      <form onSubmit={onSubmit} className="ui error form">
+      <Form onSubmit={onSubmit} error>
         <h1>{header}</h1>
-        <div className="ui clearing divider"></div>
+        <Divider />
         <FieldArray name={name} component={this.renderFieldArray} />
-        <button
-          type="submit"
-          style={{ marginBottom: '20px' }}
-          className="button ui right floated"
-        >
+        <Button type="submit" style={{ marginBottom: '20px' }} floated="right">
           {submitBtnText}
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={prevPage}
           type="button"
           style={{ marginBottom: '20px' }}
-          className="button ui right floated"
+          floated="right"
         >
           Previous
-        </button>
-      </form>
+        </Button>
+      </Form>
     );
   }
 }

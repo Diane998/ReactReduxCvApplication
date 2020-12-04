@@ -36,7 +36,7 @@ class NavBar extends Component {
         <NavLink exact to="/create" className="item">
           Create CV Application
         </NavLink>
-        <NavLink exact to="/view/XAqHyKKplZU8UtWINinY" className="item">
+        <NavLink exact to="/default" className="item">
           View Default CV Application
         </NavLink>
         {this.props.auth ? (

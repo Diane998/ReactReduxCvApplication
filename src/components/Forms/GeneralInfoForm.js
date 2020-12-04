@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+
+import { Divider, Form, Button, Segment } from 'semantic-ui-react';
 import InputField from '../Fields/InputField';
 
 class GeneralInfoForm extends Component {
@@ -9,11 +11,11 @@ class GeneralInfoForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit} className="ui error form">
+      <Form onSubmit={this.props.handleSubmit} error>
         <h1>General Information</h1>
-        <div className="ui clearing divider"></div>
-        <div className="ui segment">
-          <div className="two fields">
+        <Divider />
+        <Segment>
+          <Form.Group widths="equal">
             <Field
               name="firstName"
               type="text"
@@ -28,7 +30,7 @@ class GeneralInfoForm extends Component {
               normalize={value => this.onChangeCapitalize(value)}
               component={InputField}
             />
-          </div>
+          </Form.Group>
           <Field
             name="profession"
             type="text"
@@ -61,14 +63,14 @@ class GeneralInfoForm extends Component {
             label="GitHub"
             component={InputField}
           />
-        </div>
-        <button
+        </Segment>
+        <Button
           style={{ marginBottom: '20px' }}
           className="button ui right floated"
         >
           Next Page
-        </button>
-      </form>
+        </Button>
+      </Form>
     );
   }
 }

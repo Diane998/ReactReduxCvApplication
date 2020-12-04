@@ -8,6 +8,7 @@ import CvApplication from './CvApplication';
 import Navbar from './Navbar';
 import SignIn from './auth/SignIn';
 import SignUp from './auth/SignUp';
+import DummyCv from './DummyCv';
 
 class App extends Component {
   render() {
@@ -21,6 +22,7 @@ class App extends Component {
             <Route path="/signin" exact component={SignIn} />
             <Route path="/create" exact component={CvApplicationForm} />
             <Route path="/view/:docId" exact component={CvApplication} />
+            <Route path="/default" exact component={DummyCv} />
           </Switch>
         </Container>
       </Router>
