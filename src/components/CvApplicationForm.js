@@ -35,7 +35,7 @@ class CvApplicationForm extends Component {
     const { auth } = this.props;
 
     if (!auth.uid) {
-      return <Redirect to="/signin" />;
+      return <Redirect to="/signup" />;
     } else {
       return (
         <>
