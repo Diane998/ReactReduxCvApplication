@@ -16,12 +16,12 @@ class NavBar extends Component {
     } else {
       return (
         <>
-          <NavLink exact to="/signup" className="item">
+          <Menu.Item as={NavLink} exact to="/signup">
             Sign up
-          </NavLink>
-          <NavLink exact to="/" className="item">
+          </Menu.Item>
+          <Menu.Item as={NavLink} exact to="/signin">
             Sign in
-          </NavLink>
+          </Menu.Item>
         </>
       );
     }
@@ -33,18 +33,18 @@ class NavBar extends Component {
         <Menu.Item>
           <h3>CV Creator</h3>
         </Menu.Item>
-        <NavLink exact to="/create" className="item">
+        <Menu.Item as={NavLink} exact to="/create">
           Create CV Application
-        </NavLink>
-        <NavLink exact to="/default" className="item">
+        </Menu.Item>
+        <Menu.Item as={NavLink} exact to="/default">
           View Default CV Application
-        </NavLink>
+        </Menu.Item>
         {this.props.auth ? (
-          <NavLink exact to={`/view/${this.props.auth.uid}`} className="item">
+          <Menu.Item as={NavLink} exact to={`/view/${this.props.auth.uid}`}>
             View CV Application
-          </NavLink>
+          </Menu.Item>
         ) : null}
-        <div className="right menu">{this.renderAuthentication()}</div>
+        <Menu.Menu position="right">{this.renderAuthentication()}</Menu.Menu>
       </Menu>
     );
   }
